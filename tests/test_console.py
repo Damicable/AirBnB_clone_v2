@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Test for console module"""
+"""Test for console"""
 import unittest
 from unittest.mock import patch
 from io import StringIO
@@ -33,7 +33,7 @@ class TestConsole(unittest.TestCase):
         del cls.consol
 
     def tearDown(self):
-        """Remove temporary file (file.json) created as a result"""
+        """Removes temporary file (file.json) created as a result"""
         try:
             os.remove("file.json")
         except Exception:
