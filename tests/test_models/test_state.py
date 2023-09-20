@@ -49,6 +49,25 @@ class test_state(test_basemodel):
         new = self.value()
         self.assertEqual(type(new.name), str)
 
+    def test_cities(self):
+        """Tests the city method works """
+        new = self.value()
+        self.assertEqual(type(new.cities()), list)
+
+    def test_to_dict(self):
+        """Tests the to_dict is set properly """
+        new = self.value()
+        state_dict = new.to_dict()
+        self.assertEqual(type(state_dict), dict)
+        self.assertIn('name', state_dict)
+        self.assertIn('__class__', state_dict)
+
+    def test_str(self):
+        """Tests the string method of the state """
+        new = self.value()
+        self.assertEqual(str(new), "[{}] ({}) {}".format(self.name, new.id,
+        new.__dict__))
+
     def test_save_State(self):
         """Tests if the save works"""
         self.state.save()

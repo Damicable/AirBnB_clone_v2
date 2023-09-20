@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This tests for Place """
+"""This tests for Place class"""
 import unittest
 import os
 import pep8
@@ -65,7 +65,7 @@ class test_Place(test_basemodel):
     def test_longitude(self):
         """Checks if longitude of Place class is properly set"""
         new = self.value()
-        self.assertEqual(type(new.latitude), float)
+        self.assertEqual(type(new.longitude), float)
 
     def test_amenity_ids(self):
         """Checks if amenity_ids of Place class is properly set"""
@@ -77,6 +77,16 @@ class test_Place(test_basemodel):
         """This tests if the save works"""
         self.place.save()
         self.assertNotEqual(self.place.created_at, self.place.updated_at)
+
+    def test_created_at(self):
+        """Tests if created_at attribute works """
+        new = self.value()
+        self.assertEqual(type(new.created_at), datetime.datetime)
+
+    def test_updated_at(self):
+        """Tests the updated_at method works """
+        new = self.value()
+        self.assertEqual(type(new.updated_at), datetime.datetime)
 
     def test_attributes_Place(self):
         """Tests for amenity attributes of class Place are working"""

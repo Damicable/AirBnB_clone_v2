@@ -89,6 +89,23 @@ class test_User(test_basemodel):
     def test_to_dict_User(self):
         """Test if dictionary is working"""
         self.assertEqual('to_dict' in dir(self.user), True)
+    def test_full_name(self):
+        """Test for full_name """
+        new = self.value()
+        full_name = new.first_name + ' ' + new.last_name
+        self.assertEqual(new.full_name(), full_name)
+
+    def test_is_valid_email(self):
+        """Test for valid_email """
+        valid_email = "test@example.com"
+        invalid_email = "invalid-email"
+
+        new = self.value()
+        new.email = valid_email
+        self.assertTrue(new.is_valid_email())
+
+        new.email = invalid_email
+        self.assertFalse(new.is_valid_email())
 
 
 if __name__ == "__main__":

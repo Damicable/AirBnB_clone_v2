@@ -53,7 +53,7 @@ class test_City(test_basemodel):
         self.assertEqual(type(new.name), str)
 
     def test_checking_for_docstring_City(self):
-        """checking for docstrings"""
+        """Test to check for docstrings"""
         self.assertIsNotNone(City.__doc__)
 
     def test_attributes_City(self):

@@ -75,6 +75,16 @@ class test_review(test_basemodel):
         new = self.value()
         self.assertEqual(type(new.text), str)
 
+    def test_created_at(self):
+        """Test that updated_at attribute is set correctly"""
+        new = self.value()
+        self.assertEqual(type(new.created_at), datetime.datetime)
+
+    def test_updated_at(self):
+        """Test that updated_at attribute is set correctly """
+        new = self.value()
+        self.assertEqual(type(new.updated_at), datetime.datetime)
+
     @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == 'db', 'DB')
     def test_save_Review(self):
         """Tests if the save works"""
