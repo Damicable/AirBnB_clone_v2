@@ -5,7 +5,6 @@ from models.base_model import BaseModel, Base
 import sqlalchemy
 from sqlalchemy import Column, String
 from os import getenv
-from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
@@ -23,3 +22,7 @@ class User(BaseModel, Base):
         password = ''
         first_name = ''
         last_name = ''
+
+    def __init__(self, *args, **kwargs):
+        """User class initializtion"""
+        super().__init__(*args, **kwargs)
