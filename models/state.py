@@ -8,18 +8,14 @@ from sqlalchemy.orm import relationship
 from os import getenv
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """ State class """
     if models.mode == 'db':
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
-        cities = relationship('City', backref='state', lazy='dynamic')
+        cities = relationship('City', backref='state')
     else:
         name = ""
-
-    def __init__(self, *args, **kwargs):
-        """State object initialization"""
-        super().__init__(*args, **kwargs)
 
     if models.mode != 'db':
         @property
