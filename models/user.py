@@ -3,9 +3,10 @@
 import models
 from models.base_model import BaseModel, Base
 import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String
 from os import getenv
+from sqlalchemy.orm import relationship
+
 
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
@@ -15,6 +16,8 @@ class User(BaseModel, Base):
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=False)
         last_name = Column(String(128), nullable=False)
+        places = relationship("Place", backref="user")
+        reviews = relationship("Review", backref="user")
     else:
         email = ''
         password = ''
