@@ -3,6 +3,8 @@
 import cmd
 import sys
 import uuid
+import shlex
+import models
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -235,20 +237,19 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
-
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+        arg_list = shlex.split(args)
+        if not len(arg_list):
+            print_obj = models.storage.all()
+        elif arg_list[0] in self.classes:
+            print_obj = models.storage.all(self.classes[arg_list[0]])
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
-
-        print(print_list)
+            print("** class doesn't exist **")
+            return False
+        for idx in print_obj:
+            each_print_obj = print_obj[idx]
+            print_list.append(str(each_print_obj))
+        conc_str = ", ".join(print_list)
+        print("[{}]".format(conc_str))
 
     def help_all(self):
         """ Help information for the all command """
