@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Test for amenity """
+"""Unit tests for Amenity class """
 import unittest
 import os
 from tests.test_models.test_base_model import test_basemodel
@@ -15,11 +15,6 @@ class test_Amenity(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "Amenity"
         self.value = Amenity
-
-    def test_name2(self):
-        """Tests for new string length """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
 
     @classmethod
     def setUpClass(cls):
@@ -45,6 +40,11 @@ class test_Amenity(test_basemodel):
         p = style.check_files(['models/amenity.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
 
+    def test_name_attribute(self):
+        """Tests for new string length """
+        new_amenity = self.value()
+        self.assertEqual(type(new_amenity.name), str)
+
     def test_checking_for_docstring_Amenity(self):
         """Testing for docstrings"""
         self.assertIsNotNone(Amenity.__doc__)
@@ -55,6 +55,13 @@ class test_Amenity(test_basemodel):
         self.assertTrue('created_at' in self.amenity.__dict__)
         self.assertTrue('updated_at' in self.amenity.__dict__)
         self.assertTrue('name' in self.amenity.__dict__)
+
+    def test_str_method(self):
+        """Test the __str__ method of Amenity"""
+        new_amenity = self.value()
+        expected_str = "[{}] ({}) {}".format(self.name, new_amenity.id,
+                new_amenity.__dict__)
+        self.assertEqual(str(new_amenity), expected_str)
 
     def test_is_subclass_Amenity(self):
         """Tests if Amenity is subclass of Basemodel"""
