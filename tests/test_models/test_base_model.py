@@ -48,6 +48,12 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
 
+    def test_str_representation(self):
+        """Test the __str__ representation of BaseModel"""
+        expected_str = "[BaseModel] ({}) {}".format(self.basemodel.id,
+                        self.basemodel.__dict__)
+        self.assertEqual(str(self.basemodel), expected_str)
+
     def test_save(self):
         """ Testing save """
         i = self.value()
@@ -61,7 +67,7 @@ class test_basemodel(unittest.TestCase):
         """Tests the string lenght of a method """
         i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
-                         i.__dict__))
+                        i.__dict__))
 
     def test_todict(self):
         """Tests if dictionary conversion works """
@@ -113,9 +119,47 @@ class test_basemodel(unittest.TestCase):
         self.assertIsNotNone(BaseModel.save.__doc__)
         self.assertIsNotNone(BaseModel.to_dict.__doc__)
 
-    def test_init_BaseModel(self):
+    def test_default_constructor(self):
+        """Test the default constructor of BaseModel"""
+        self.assertIsInstance(self.basemodel, BaseModel)
+        self.assertIsInstance(self.basemodel.id, str)
+        self.assertIsInstance(self.basemodel.created_at, datetime.datetime)
+        self.assertIsInstance(self.basemodel.updated_at, datetime.datetime)
+
+    def test_to_dict(self):
+        """Test the to_dict method of BaseModel"""
+        self.basemodel.name = "Test"
+        self.basemodel.age = 25
+        self.basemodel.save()
+        base_dict = self.basemodel.to_dict()
+        expected_keys = ["id", "created_at", "updated_at", "name", "age",
+                        "__class__"]
+        self.assertEqual(sorted(base_dict.keys()), sorted(expected_keys))
+        self.assertEqual(base_dict['__class__'], 'BaseModel')
+        self.assertEqual(base_dict['name'], "Test")
+        self.assertEqual(base_dict['age'], 25)
+
+     def test_init_BaseModel(self):
         """Tests if base is type BaseModel"""
         self.assertTrue(isinstance(self.base, BaseModel))
+
+    def test_from_dict(self):
+        """Test creating a BaseModel instance from a dictionary"""
+        data = {
+                "id": "123",
+                "created_at": "2023-01-01T00:00:00",
+                "updated_at": "2023-01-02T00:00:00",
+                "name": "Test",
+                "__class__": "BaseModel"
+        }
+        new_instance = BaseModel(**data)
+        self.assertEqual(new_instance.id, "123")
+        self.assertEqual(new_instance.created_at,
+                        datetime.datetime(2023, 1, 1, 0, 0))
+        self.assertEqual(new_instance.updated_at,
+                        datetime.datetime(2023, 1, 2, 0, 0))
+        self.assertEqual(new_instance.name, "Test")
+        self.assertIsInstance(new_instance, BaseModel)
 
 
 if __name__ == "__main__":

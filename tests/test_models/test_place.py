@@ -8,8 +8,8 @@ from tests.test_models.test_base_model import test_basemodel
 from models.place import Place
 
 
-class test_Place(test_basemodel):
-    """This tests for class Place is subclass of BaseModel"""
+class TestPlace(test_basemodel):
+    """This tests cases for class Place"""
 
     def __init__(self, *args, **kwargs):
         """This initializes the test process  """
@@ -71,6 +71,7 @@ class test_Place(test_basemodel):
         """Checks if amenity_ids of Place class is properly set"""
         new = self.value()
         self.assertEqual(type(new.amenity_ids), list)
+        self.assertEqual(len(new.amenity_ids), 0)
 
     @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == 'db', 'DB')
     def test_save_Place(self):
