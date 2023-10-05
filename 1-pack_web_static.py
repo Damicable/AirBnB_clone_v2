@@ -14,11 +14,11 @@ def do_pack():
     local_folder = "web_static"
     archive_folder = "versions"
 
-    # Create the versions folder if it doesn't exist
+    """ Create the versions folder if it doesn't exist"""
     if not os.path.exists(archive_folder):
         os.makedirs(archive_folder)
 
-    # Create the archive using tar command
+    """ Create the archive using tar command"""
     tar_command = f"tar -czvf {archive_folder}/{archive_name} {local_folder}"
 
     result = local(tar_command)
