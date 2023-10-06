@@ -1,48 +1,56 @@
 #!/usr/bin/python3
-# Fabric script that distributes an archive to a web servers.
-import os.path
-from fabric.api import env
-from fabric.api import put
-from fabric.api import run
+"""
+Fabric script That distribute an archive to web servers.
+"""
 
-env.hosts = ["34.224.62.116", "35.174.204.80"]
+from fabric import task
+from datetime import datetime
+import os
+
+env.hosts = ['34.224.62.116', '35.174.204.80']
+env.user = 'ubuntu'
 
 
+@task
 def do_deploy(archive_path):
-    """Script to distributes an archive to a web server.
-    Args:
-        archive_path (str): The path of the archive to distribute.
-    Returns:
-         False if the file doesn't exist at archive_path or an error occurs
-        Otherwise - True.
     """
-    if os.path.isfile(archive_path) is False:
-        return False
-    file = archive_path.split("/")[-1]
-    name = file.split(".")[0]
+    Distribute and deploy an archive to web servers.
 
-    if put(archive_path, "/tmp/{}".format(file)).failed is True:
+    Args:
+        archive_path (str): The path to the archive to be deployed.
+
+    Returns:
+        bool: True if all operations have been done correctly, False otherwise.
+    """
+    if not os.path.exists(archive_path):
         return False
-    if run("rm -rf /data/web_static/releases/{}/".
-           format(name)).failed is True:
-        return False
-    if run("mkdir -p /data/web_static/releases/{}/".
-           format(name)).failed is True:
-        return False
-    if run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".
-           format(file, name)).failed is True:
-        return False
-    if run("rm /tmp/{}".format(file)).failed is True:
-        return False
-    if run("mv /data/web_static/releases/{}/web_static/* "
-           "/data/web_static/releases/{}/".format(name, name)).failed is True:
-        return False
-    if run("rm -rf /data/web_static/releases/{}/web_static".
-           format(name)).failed is True:
-        return False
-    if run("rm -rf /data/web_static/current").failed is True:
-        return False
-    if run("ln -s /data/web_static/releases/{}/ /data/web_static/current".
-           format(name)).failed is True:
-        return False
-    return True
+
+    try:
+        """ Upload the archive to /tmp/ on the web server"""
+        archive_filename = os.path.basename(archive_path)
+        tmp_archive_path = "/tmp/" + archive_filename
+        put(archive_path, tmp_archive_path)
+
+        """ Create a directory for the new release"""
+        release_folder = "/data/web_static/releases/" + \
+            archive_filename.split('.')[0]
+        run("mkdir -p {}".format(release_folder))
+
+        """ Uncompress the archive to the release folder"""
+        run("tar -xzf {} -C {}".format(tmp_archive_path, release_folder))
+
+        """ Delete the archive from /tmp/"""
+        run("rm -f {}".format(tmp_archive_path))
+
+        """ Move the contents to the current symbolic link"""
+        run("mv {}/web_static/* {}".format(release_folder, release_folder))
+
+        """ Remove the empty web_static directory"""
+        run("rm -rf {}/web_static".format(release_folder))
+
+        """ Update the symbolic link"""
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} /data/web_static/current".format(release_folder))
+
+        return True
+    except Exception as e:
