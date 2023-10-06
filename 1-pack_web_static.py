@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 # Fabric script to generates a .tgz archive from the contents of web_static
 
+import os
 from fabric import task
 from datetime import datetime
-import os
 
 
 @task
