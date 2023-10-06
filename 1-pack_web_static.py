@@ -8,7 +8,12 @@ from datetime import datetime
 
 @task
 def do_pack():
-    """Create a .tgz archive from the contents of web_static folder."""
+    """
+    Generate a .tgz archive from web_static folder.
+
+    Returns:
+        Archive path if generated, otherwise None.
+    """
     timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
     archive_name = f"web_static_{timestamp}.tgz"
     local_folder = "web_static"
