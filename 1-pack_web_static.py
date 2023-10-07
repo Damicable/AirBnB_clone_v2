@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" Fabric script to generate a .tgz archive from contents of web_static
+"""
+Fabric script to generate a .tgz archive from contents of web_static
 """
 import os
 from fabric import task
@@ -14,7 +15,8 @@ def do_pack():
     Returns:
         Archive path if generated, otherwise None.
     """
-    timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    timestamp = datetime.utcnow().strftime("%year%month%day%hour%munite%
+                                           second")
     archive_name = f"web_static_{timestamp}.tgz"
     local_folder = "web_static"
     archive_folder = "versions"
