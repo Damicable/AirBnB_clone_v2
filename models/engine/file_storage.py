@@ -23,11 +23,11 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models curriently in storage"""
-        if cls and cls in classes:
+        if cls and cls.__name__ in classes:
             cls_obj = {}
             for key, val in self.__objects.items():
                 cls_val = key.split('.')[0]
-                if cls_val == cls:
+                if cls_val == cls.__name__:
                     cls_obj[key] = val
             return cls_obj
         return self.__objects
@@ -62,3 +62,7 @@ class FileStorage:
             idx = obj.__class__.__name__ + '.' + obj.id
             if idx in self.__objects.keys():
                 del self.__objects[idx]
+
+    def close(self):
+        """This trigger reload method to deserialize JSON to objects"""
+        self.reload()
