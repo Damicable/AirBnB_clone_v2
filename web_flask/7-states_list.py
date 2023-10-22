@@ -11,8 +11,9 @@ app = Flask(__name)
 
 
 @app.route('/states_list', strict_slashes = False)
+def list_state():
     """This is /states_list route that a list of states."""
-    tates_list = []
+    states_list = []
     all_states = storage.all(State)
     for st in all_states:
         states_list.append(all_states[st])
