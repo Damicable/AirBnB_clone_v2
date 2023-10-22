@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Display flask web application route module"""
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -18,14 +18,14 @@ def lone_hbnb():
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def arg_hbnb(text):
+def c_arg_hbnb(text):
     """This defines the /c/<text> route"""
     return "C {}".format(text.replace('_', ' '))
 
 
 @app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def python_text(text):
+def python_arg_hbnb(text):
     """This display /python/<text> route with text = 'is cool'"""
     return "Python {}".format(text.replace('_', ' '))
 
@@ -34,6 +34,22 @@ def python_text(text):
 def number_arg_hbnb(n):
     """Displays "n is a number" for /number/<n> route"""
     return "{} is a number".format(n)
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def number_template_arg_hbnb(n):
+    """This displays 'HTML'for /number_template/<int:n> route"""
+    return render_template('5-number.html', n=n)
+
+
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def number_even_or_odd_hbnb(n):
+    """This displays HTML page for /number_odd_or_even/<n> route"""
+    if int(n) % 2 == 0:
+        result = "even"
+    else:
+        result = "odd"
+    return render_template('6-number_odd_or_even.html', n=n, p=result)
 
 
 if __name__ == '__main__':
