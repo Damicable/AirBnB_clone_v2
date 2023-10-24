@@ -12,8 +12,8 @@ app = Flask(__name__)
 def display_states():
     """This route fetches and lists all states."""
     states = storage.all(State)
-    state = sorted(states.values(), key=lambda x: x.name)
-    return render_template('7-states_list.html', state=state)
+    states = sorted(states.values(), key=lambda x: x.name)
+    return render_template('7-states_list.html', all_state=states)
 
 
 @app.teardown_appcontext
