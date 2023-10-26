@@ -27,14 +27,16 @@ def display_cities_by_states():
             )
         }
         states_list.append(state_dict)
-    
+
     states_list = sorted(states_list, key=lambda x: x["name"])
     return render_template('8-cities_by_states.html', states_list=states_list)
+
 
 @app.teardown_appcontext
 def teardown_session(exception):
     """Closes the current SQLAlchemy Session after each request."""
     storage.close()
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
