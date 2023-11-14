@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<HTML LANG="en">
-<HEAD>
-    <TITLE>HBNB</TITLE>
-</HEAD>
-<BODY>
-    <H1>States</H1>
-    <UL>
-        {% for state in a_s %}
-        <LI><B>{{ state.id }}: {{ state.name }}</B></LI>
-        {% endfor %}
-    </UL>
-</BODY>
+<HTML lang="en">
+	<HEAD>
+		<TITLE>HBNB</TITLE>
+	</HEAD>
+	<BODY>
+		<H1>States</H1>
+		<UL>
+			{% for state in a_s %}
+				<LI>
+					State: {{ state.id }}: <B>{{ state.name }}</B>
+				</LI>
+			{% endfor %}
+		</UL>
+	</BODY>
 </HTML>
