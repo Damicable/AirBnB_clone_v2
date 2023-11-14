@@ -41,9 +41,9 @@ def fetch_state_id(id):
             sorted_cts = sorted(ct_list, key=lambda x: x['name'])
             a_s_d['cts'] = sorted_cts
             a_s_d['flag'] = True
-            return render_template('9-states.html', states=a_s_d)
+            return render_template('9-states.html', a_s=a_s_d)
     a_s_d = {'flag': False}
-    return render_template('9-states.html', states=a_s_d)
+    return render_template('9-states.html', a_s=a_s_d)
 
 
 @app.teardown_appcontext
