@@ -48,6 +48,7 @@ def fetch_state_id(id):
 
 @app.teardown_appcontext
 def app_teardown(exception):
+    """Closes the current SQLAlchemy Session after each request."""
     storage.close()
 
 

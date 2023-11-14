@@ -4,11 +4,11 @@
 		<TITLE>HBNB</TITLE>
 	</HEAD>
 	<BODY>
-		{% if states.flag %}
-		<H1>State: {{ states.name }}</H1>
+		{% if a_s.flag %}
+		<H1>State: {{ a_s.name }}</H1>
 		<H3>Cities:</H3>
 				<UL>
-					{% for ct in states.cts %}
+					{% for ct in a_s.cts %}
 						<LI>
 							{{ ct.id }}: <B>{{ ct.name }}</B>
 						</LI>
