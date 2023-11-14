@@ -28,8 +28,8 @@ def display_cities_by_states():
         }
         states_list.append(state_dict)
 
-    states_list = sorted(states_list, key=lambda x: x["name"])
-    return render_template('8-cities_by_states.html', states_list=states_list)
+    a_s = sorted(states_list, key=lambda x: x["name"])
+    return render_template('8-cities_by_states.html', a_s=a_s)
 
 
 @app.teardown_appcontext
