@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+!/usr/bin/python3
 """This is a simple Flask web application script that displays all states."""
 
 from flask import Flask, render_template
@@ -13,7 +13,7 @@ def display_states():
     """This route fetches and lists all states."""
     states = storage.all(State)
     states = sorted(states.values(), key=lambda x: x.name)
-    return render_template('7-states_list.html', all_state=states)
+    return render_template('7-states_list.html', all_states=states)
 
 
 @app.teardown_appcontext
