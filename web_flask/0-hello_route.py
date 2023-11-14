@@ -5,7 +5,7 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/airbnb-onepage/', strict_slashes=False)
+@app.route('/', strict_slashes=False)
 def hello_hbnb():
     """This is function definition hello HBNB"""
     return "Hello HBNB!"
